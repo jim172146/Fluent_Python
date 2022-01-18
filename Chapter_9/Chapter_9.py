@@ -413,7 +413,7 @@ class ShortVector2d(Vector2d):
 
 sv = ShortVector2d(1/11, 1/27)
 print(sv)
-print(len(sv))
+print(len(bytes(sv)))
 
 
 # --------------------------------------------------
