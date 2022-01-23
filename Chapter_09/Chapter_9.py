@@ -258,6 +258,9 @@ class Vector2d:
         # 需要读取x,y分量的方法可以保持不变,通过self.x和self.y读取公开特性,而不读取私有属性
         return (i for i in (self.x, self.y))
 
+    def __len__(self):
+        return 2
+
     def __hash__(self):
         return hash(self.x) ^ hash(self.y)
 
