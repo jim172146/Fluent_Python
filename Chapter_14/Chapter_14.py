@@ -1,7 +1,7 @@
 __author__ = 'fmy'
 
 import abc
-import collections
+import collections.abc
 import decimal
 import fractions
 import itertools
