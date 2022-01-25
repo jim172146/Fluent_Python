@@ -6,6 +6,7 @@ import decimal
 import fractions
 import itertools
 import operator
+import random
 import re
 import reprlib
 
@@ -596,18 +597,69 @@ print(list(zip(*itertools.tee('ABC', 3))))
 # --------------------------------------------------
 # 14.10 Python3.3中新出现的句法:yield from
 print('*' * 50)
+# 如果生成器函数需要产出另一个生成器生成的值,传统的解决方法是使用嵌套的 for 循环
 
 
+def chain(*iterables):
+    for it in iterables:
+        for i in it:
+            yield i
 
-"""
+
+s = 'ABC'
+t = tuple(range(3))
+print(list(chain(s, t)))
+# chain生成器函数把操作依次交给接收到的各个可迭代对象处理
+
+
+def chain(*iterables):
+    for it in iterables:
+            yield from it  # yield from it 完全代替了内层的for循环
+
+
+print(list(chain(s, t)))
+
+
 # --------------------------------------------------
 # 14.11 可迭代的归约函数
 print('*' * 50)
+# 以下函数都接受一个可迭代的对象后返回单个结果
+# 这些函数叫'归约'函数、'合拢'函数或'累加'函数
+# all(it),it中的所有元素都为真值时返回True,all([])返回True
+# any(it),it中有元素为真值就返回True,any([])返回False
+# max(it, [key=,][default=])
+# min(it, [key=,][default=])
+# functools.reduce(func, it, [initial])
+# sum(it, start=0)
+
+print(all([1, 2, 3]))
+print(all([1, 0, 3]))
+print(all([]))
+print(any([1, 2, 3]))
+print(any([1, 0, 3]))
+print(any([]))
+g = (n for n in [0, 0.0, 7, 8])
+print(any(g))
+print(all(g))
+# print(next(g))  StopIteration
 
 
 # --------------------------------------------------
 # 14.12 深入分析iter函数
 print('*' * 50)
+
+
+# iter函数还有一个鲜为人知的用法:传入两个参数,使用常规的函数或任何可调用的对象创建迭代器
+# 第一个参数必须是可调用的对象用于不断调用产出各个值
+# 第二个值是哨符,当可调用的对象返回这个值时触发迭代器抛出StopIteration异常,而不产出哨
+def d6():
+    return random.randint(1, 6)
+
+
+d6_iter = iter(d6, 1)
+print(d6_iter)
+for roll in d6_iter:
+    print(roll)
 
 
 # --------------------------------------------------
@@ -618,9 +670,20 @@ print('*' * 50)
 # --------------------------------------------------
 # 14.14 把生成器当成协程
 print('*' * 50)
+# .send()方法允许在客户代码和生成器之间双向交换数据
+# .__next__()方法只允许客户从生成器中获取数据
+# · 生成器用于生成供迭代的数据
+# · 协程是数据的消费者
+# · 为了避免脑袋炸裂,不能把这两个概念混为一谈
+# · 协程与迭代无关
+# · 虽然在协程中会使用yield产出值,但这与迭代无关
 
 
 # --------------------------------------------------
 # 14.15 本章小结
 print('*' * 50)
-"""
+# 1).写了一个类的几个版本,用于读取内容可能很多的文件,并迭代里面的单词
+#    用了生成器,所以在重构的过程中,Sentence类越来越简短越来越易于阅读
+# 2).生成器的工作原理
+# 3).编写了一个用于生成等差数列的生成器,还说明了如何利用itertools模块做简化
+# 4).分析了内置的iter函数
