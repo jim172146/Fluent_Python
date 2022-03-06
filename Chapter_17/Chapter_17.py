@@ -1,6 +1,11 @@
-# encoding=gbk
 __author__ = 'fmypcon'
 
 
-"使用器物处理并发"
+"浣跨敤鍣ㄧ墿澶勭悊骞跺彂"
+
+
+
+
+
+
 
