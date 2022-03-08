@@ -17,10 +17,10 @@ import spinner_thread
 # --------------------------------------------------
 # 18.1 线程与协程对比
 print('*' * 50)
-# spinner_thread.py:通过线程以动画形式显示文本式旋转指针
+# spinner_thread:通过线程以动画形式显示文本式旋转指针
 spinner_thread.main()  # 在终端可以看到效果
 
-# spinner_asyncio.py:通过协程以动画形式显示文本式旋转指针
+# spinner_asyncio:通过协程以动画形式显示文本式旋转指针
 # 这里没给出
 
 """
