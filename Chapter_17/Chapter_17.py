@@ -1,4 +1,4 @@
-__author__ = 'fmypcon'
+__author__ = 'fmy'
 
 import os
 import time
