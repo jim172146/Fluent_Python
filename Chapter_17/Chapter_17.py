@@ -155,7 +155,40 @@ def main4(download_many4):
 print('*' * 50)
 
 
+def display(*args):
+    print(time.strftime('[%H:%M:%S]'), end=' ')
+    print(*args)
 
-# if __name__ == '__main__':
-#     main3(download_many4)
 
+def loiter(n):
+    msg = '{}loiter({}):doing nothng for {}s...'
+    display(msg.format('\t'*n, n, n))
+    time.sleep(n)
+    msg = '{}loiter({}):done.'
+    display(msg.format('\t'*n, n))
+    return n * 10
+
+
+def main4():
+    display('Script starting.')
+    executor = futures.ThreadPoolExecutor(max_workers=3)
+    results = executor.map(loiter, range(5))
+    display('results:', results)
+    display('Waiting for individual results:')
+    # executor.map方法返回的结果是生成器;不管有多少任务,不管max_workers的值是多少,不会阻塞
+    for i, result in enumerate(results):
+        display('result {}: {}'.format(i, result))
+
+
+# --------------------------------------------------
+# 17.5 显示下载进度并处理错误
+print('*' * 50)
+
+
+# --------------------------------------------------
+# 17.6 本章小结
+print('*' * 50)
+
+
+if __name__ == '__main__':
+    main4()
